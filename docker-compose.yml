@@ -1,0 +1,106 @@
+version: '3.9'
+
+services:  
+  # grafana:
+  #   image: grafana/grafana-oss:latest
+  #   ports:
+  #     - 3000:3000
+
+  # prometheus:
+  #     image: prom/prometheus:latest
+  #     ports:
+  #     - 9090:9090
+  #     volumes:
+  #     - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+
+  postgres:
+    image: postgres:9.6-alpine
+    restart: always 
+    hostname: kong-database
+    container_name: kong-database
+    environment:
+      POSTGRES_USER: "kong"
+      POSTGRES_DB: "kong"
+      POSTGRES_PASSWORD: "kong"
+  kong-bootstrap:
+    image: kong/kong-gateway:latest
+    hostname: kong-bootstrap
+    container_name: kong-bootstrap
+    depends_on:
+      - postgres
+    environment:
+      KONG_DATABASE: "postgres"
+      KONG_PG_HOST: "kong-database"
+      KONG_PG_USER: "kong"
+      KONG_PG_PASSWORD: "kong"
+    command: "kong migrations bootstrap"
+    restart: "on-failure"
+  kong:
+    image: kong/kong-gateway:latest
+    restart: always 
+    hostname: kong
+    container_name: kong
+    # depends_on:
+    #   - kong-bootstrap
+    environment:
+      KONG_DATABASE: "postgres"
+      KONG_PG_HOST: "kong-database"
+      KONG_PG_USER: "kong"
+      KONG_PG_PASSWORD: "kong"
+      KONG_PROXY_ACCESS_LOG: "/dev/stdout"
+      KONG_ADMIN_ACCESS_LOG: "/dev/stdout"
+      KONG_PROXY_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001, 0.0.0.0:8444 ssl" 
+    command: "kong start"
+    ports:
+     - "8000:8000"
+     - "8002:8002"
+     - "8433:8433"
+     - "8001:8001"
+     - "8444:8444"
+
+  server:
+      container_name: hello-world
+      depends_on:
+          - db
+      build:
+          context: helloworld_api
+          dockerfile: Dockerfile
+      image: helloworld_api:latest
+      environment:
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/DB-USERNAME   ### replace the DB-USERNAME with your desired USERNAME      
+        - SPRING_DATASOURCE_USERNAME=DB-USERNAME                        ### replace the DB-USERNAME with your desired USERNAME
+        - SPRING_DATASOURCE_PASSWORD=DB-PASSWORD                        ### replace the DB-PASSWORD with your desired PASSWORD
+        - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      # ports:
+      #   - 8080:8080
+
+  db:
+      image: 'postgres:13.1-alpine'
+      container_name: db
+      environment:
+          - POSTGRES_USER=DB-USERNAME                                     ### replace the DB-USERNAME with your desired USERNAME
+          - POSTGRES_PASSWORD=DB-PASSWORD                                 ### replace the DB-PASSWORD with your desired PASSWORD
+      volumes:
+        - "./init.sql:/tmp/init.sql"
+        - "./database:/var/lib/postgresql/data"
+
+      # ports:
+      #     - 5432:5432
+  # pgadmin:
+  #     container_name: pgadmin4_container
+  #     depends_on:
+  #         - server
+  #     image: dpage/pgadmin4
+
+  #     environment:
+  #         - PGADMIN_DEFAULT_EMAIL=PGADMIN-EMA                             ### replace the PGADMIN-EMAIL with your desired EMAIL
+  #         - PGADMIN_DEFAULT_PASSWORD=PGADMIN-PASSWORD                     ### replace the PGADMIN-PASSWORD with your desired PASSWORD
+  #     ports:
+  #         - "5050:80"
+
+networks:
+  default:
+    name: kong-net
+
