@@ -1,17 +1,16 @@
 version: '3.9'
 
 services:  
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   grafana:
     image: grafana/grafana-oss:latest
     ports:
       - 3000:3000
-
-  prometheus:
-      image: prom/prometheus:latest
-      ports:
-      - 9090:9090
-      volumes:
-      - "./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml"
 
   postgres:
     image: postgres:9.6-alpine
@@ -73,8 +72,8 @@ services:
         - SPRING_DATASOURCE_USERNAME=DB-USERNAME                        ### replace the DB-USERNAME with your desired USERNAME
         - SPRING_DATASOURCE_PASSWORD=DB-PASSWORD                        ### replace the DB-PASSWORD with your desired PASSWORD
         - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      # ports:
-      #   - 8080:8080
+      ports:
+        - 8080:8080
 
   db:
       image: 'postgres:13.1-alpine'
