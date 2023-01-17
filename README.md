@@ -1,10 +1,8 @@
-# gateway-microservice
-This repository contains a docker compose file that when run will create a micro service that is connected to a postgres database and will be accessible through a Kong gateway.
+# API and Gateway monitoring using Prometheus and Grafana 
+This repository contains a docker compose file that when run will create a micro service that is connected to a postgres database and will be accessible through a Kong gateway. After following the steps below the API and the Kong gateway will be monoratbale through Grafana 
 
-* To deploy the application behind the Kong gateway clone this repository into the directory of your choosing.
-*  Clone repository into directory of choice.
+* To deploy the application clone this repository into the directory of your choosing.
     - Before building the appicalion open the docker compose file and change the username and password in the db environment section to a username and password of your choice. Also update the username, password, and source url in the server enviroment to match those of the db enviroments. 
-    <!-- - Repeate the above with the default email and password in the pgAdmin enviroment section. -->
     - Comments for where to make these changes can be found in the docker-compose.yml file. 
 * Ensure that Docker desktop is running on your device. 
 * In CMD run the command `docker-compose up --build`, this will take around 4 minutes to run.
@@ -17,11 +15,31 @@ This repository contains a docker compose file that when run will create a micro
         * The container hosting the database that stores the configuration of services and routes for the kong gateway.
     - db
         * The container that hosts the postgres database for our API, where users are stored in the users_table.
+    - grafana 
+        * The container that hosts the Grafana monitoring service.
 
 ### Setting up API services and routes.
 * In a new CMD window cd into the curl folder and run the `docker-compose up --build` command.
 * If the container exits with code 0 the services and routes have been created successfully.
 * To further test this, we can go to `localhost:8002` to access the kong gateway manager here we could see 5 services each with their own route. 
+
+### Setting up Kong Prometheus plugin
+* While still at the address `loaclhost:8002` underneathe sevices you will find plugins.
+* Select "install new plugins" and in the search field labeled "filter plugins" look up `prometheus`.
+* Select Enable, select Global, and check the 5 config tags at the bottom of the page
+* Select Install.
+
+### Setting up Prometheus and Grafana.
+* In a new CMD window cd into the prometheus folder and run the `docker-compose up --build` command.
+* Look up `localhost:3000`, this will direct you to the Grafana page, login using username admin and password admin.
+* Once you have set a new password you will be directed to the home page where you will need to make a new datasource.
+* Click Add your first data source, in the time series data section select prometheus.
+* Give the data source a sutible name of your choising, and the URL `http://prometheus:9090`
+* All other fields can be left blank, now scoll to the bottom of the page and selsct save and test.
+* A pop up should appare saying the data source is working. Now hover your mouse over the 4th item from the top on the right hand side nav bar (this should show dashboard options) and select import.
+* Upload the `kong-prometheus-dashboard.yml` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
+* Click Import. You will be directed to a dashboard page with 
+
 
 ### Cleaning up docker containers
 * To remove now unused docker container (this being the curl and kong bootstrap containers) we can use the command `docker container prune -f` to remove them.
