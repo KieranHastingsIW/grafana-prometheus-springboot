@@ -11,7 +11,6 @@ do
     status=$?
 done  
 
-
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=GetAllUsers \
@@ -21,7 +20,6 @@ curl -i -X POST \
     -H "Content-Type: application/json" \
     -d '{"name": "allUsers", "methods":["GET"], "hosts":["localhost"], "paths":["/users"]}'
 
-
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=CreateUser \
@@ -30,7 +28,6 @@ curl -i -X POST \
 --url http://kong:8001/services/CreateUser/routes/ \
     -H "Content-Type: application/json" \
     -d '{"name": "create", "methods":["POST"], "hosts":["localhost"], "paths":["/user"],"headers":{"Content-Type":["application/json"]}}'
-
 
 curl -i -X POST \
 --url http://kong:8001/services/ \
@@ -42,7 +39,6 @@ curl -i -X POST \
     -d '{"name": "delete", "methods":["DELETE"], "hosts":["localhost"], "paths":["/user"]}'
 
 
-
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=UpdateUser \
@@ -52,7 +48,6 @@ curl -i -X POST \
     -H "Content-Type: application/json" \
     -d '{"name": "update", "methods":["PUT"], "hosts":["localhost"], "paths":["/user"],"headers":{"Content-Type":["application/json"]}}'
     
-
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=GetUser \
