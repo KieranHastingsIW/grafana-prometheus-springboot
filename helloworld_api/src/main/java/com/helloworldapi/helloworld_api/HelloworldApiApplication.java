@@ -2,7 +2,7 @@ package com.helloworldapi.helloworld_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.boot.orm.jpa.hibernate.SpringJtaPlatform;
+import org.springframework.boot.orm.jpa.hibernate.SpringJtaPlatform;
 
 
 

@@ -14,7 +14,7 @@ done
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=GetAllUsers \
---data 'url=http://hello-world:8080/user/users'
+--data 'url=http://api:8080/user/users'
 curl -i -X POST \
 --url http://kong:8001/services/GetAllUsers/routes/ \
     -H "Content-Type: application/json" \
@@ -23,7 +23,7 @@ curl -i -X POST \
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=CreateUser \
---data 'url=http://hello-world:8080/user/create'
+--data 'url=http://api:8080/user/create'
 curl -i -X POST \
 --url http://kong:8001/services/CreateUser/routes/ \
     -H "Content-Type: application/json" \
@@ -32,7 +32,7 @@ curl -i -X POST \
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=DeleteUser \
---data 'url=http://hello-world:8080/user/delete'
+--data 'url=http://api:8080/user/delete'
 curl -i -X POST \
 --url http://kong:8001/services/DeleteUser/routes/ \
     -H "Content-Type: application/json" \
@@ -42,7 +42,7 @@ curl -i -X POST \
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=UpdateUser \
---data 'url=http://hello-world:8080/user/update'
+--data 'url=http://api:8080/user/update'
 curl -i -X POST \
 --url http://kong:8001/services/UpdateUser/routes/ \
     -H "Content-Type: application/json" \
@@ -51,7 +51,7 @@ curl -i -X POST \
 curl -i -X POST \
 --url http://kong:8001/services/ \
 --data name=GetUser \
---data 'url=http://hello-world:8080/user'
+--data 'url=http://api:8080/user'
 curl -i -X POST \
 --url http://kong:8001/services/GetUser/routes/ \
     -H "Content-Type: application/json" \

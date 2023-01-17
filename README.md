@@ -37,7 +37,7 @@ This repository contains a docker compose file that when run will create a micro
 * Give the data source a sutible name of your choising, and the URL `http://prometheus:9090`
 * All other fields can be left blank, now scoll to the bottom of the page and selsct save and test.
 * A pop up should appare saying the data source is working. Now hover your mouse over the 4th item from the top on the right hand side nav bar (this should show dashboard options) and select import.
-* Upload the `kong-prometheus-dashboard.yml` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
+* Upload the `basic-api-dashboard.json` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
 * Click Import. You will be directed to a dashboard page with 
 
 
