@@ -30,15 +30,14 @@ This repository contains a docker compose file that when run will create a micro
 * Select Install.
 
 ### Setting up Prometheus and Grafana.
-* In a new CMD window cd into the prometheus folder and run the `docker-compose up --build` command.
 * Look up `localhost:3000`, this will direct you to the Grafana page, login using username admin and password admin.
 * Once you have set a new password you will be directed to the home page where you will need to make a new datasource.
-* Click Add your first data source, in the time series data section select prometheus.
+* Click Add your first data source, and in the time series data section select prometheus.
 * Give the data source a sutible name of your choising, and the URL `http://prometheus:9090`
-* All other fields can be left blank, now scoll to the bottom of the page and selsct save and test.
+* All other fields can be left blank, now scoll to the bottom of the page and select save and test.
 * A pop up should appare saying the data source is working. Now hover your mouse over the 4th item from the top on the right hand side nav bar (this should show dashboard options) and select import.
 * Upload the `basic-api-dashboard.json` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
-* Click Import. You will be directed to a dashboard page with 
+* Click Import. You will be directed to a dashboard page with 3 panels, one with successful http requests, one with bad http requests, and one with the CPU usage of the API. 
 
 
 ### Cleaning up docker containers
