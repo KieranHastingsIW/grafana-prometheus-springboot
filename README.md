@@ -38,6 +38,8 @@ This repository contains a docker compose file that when run will create a micro
 * A pop up should appare saying the data source is working. Now hover your mouse over the 4th item from the top on the right hand side nav bar (this should show dashboard options) and select import.
 * Upload the `basic-api-dashboard.json` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
 * Click Import. You will be directed to a dashboard page with 3 panels, one with successful http requests, one with bad http requests, and one with the CPU usage of the API. 
+* Save the dashboard and return to it once you hav esent some test data using postman in the last steps.
+
 
 
 ### Cleaning up docker containers
@@ -61,5 +63,6 @@ This repository contains a docker compose file that when run will create a micro
 * Run the GetUser request with the id chosen in the previous step. we should see the updated user and also a 200 OK status code.  
 * Run the DeleteUserByID request with the id of the user you just updated in the value column in path variables, there should be no response and a status code of 204 NO CONTENT.
 * To confirm the user has been deleted run the GetUser request with the same id, we should get a 500 internal server error, and at the bottom of the error should be the message `user not found`.
+* To see metrics data return back to `localhost:3000` and return to the dashboard you had previously set up. 
 
 
