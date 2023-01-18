@@ -37,7 +37,7 @@ This repository contains a docker compose file that when run will create a micro
 * All other fields can be left blank, now scroll to the bottom of the page and select save and test.
 * A pop up should appear saying the data source is working. Now hover your mouse over the 4th item from the top on the left-hand side nav bar (this should show dashboard options) and select import.
 * 
-![navbar](https://github.com/KieranHastingsIW/grafana-prometheus-springboot/tree/main/img/nav2.png)
+![navbar](https://github.com/KieranHastingsIW/grafana-prometheus-springboot/blob/main/image/nav2.png)
 * Upload the `basic-api-dashboard.json` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
 * Click Import. You will be directed to a dashboard page with 3 panels, one with successful http requests, one with bad http requests, and one with the CPU usage of the API. 
 * Save the dashboard and return to it once you have sent some test data using postman in the last steps.
