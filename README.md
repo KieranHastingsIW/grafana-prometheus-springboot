@@ -1,8 +1,8 @@
 # API and Gateway monitoring using Prometheus and Grafana 
-This repository contains a docker compose file that when run will create a micro service that is connected to a postgres database and will be accessible through a Kong gateway. After following the steps below the API and the Kong gateway will be monoratbale through Grafana 
+This repository contains a docker compose file that when run will create a micro service that is connected to a postgres database and will be accessible through a Kong gateway. After following the steps below the API and the Kong gateway will be monitorable  through Grafana 
 
 * To deploy the application clone this repository into the directory of your choosing.
-    - Before building the appicalion open the docker compose file and change the username and password in the db environment section to a username and password of your choice. Also update the username, password, and source url in the server enviroment to match those of the db enviroments. 
+    - Before building the application open the docker compose file and change the username and password in the db environment section to a username and password of your choice. Also update the username, password, and source url in the server environment to match those of the db environments. 
     - Comments for where to make these changes can be found in the docker-compose.yml file. 
 * Ensure that Docker desktop is running on your device. 
 * In CMD run the command `docker-compose up --build`, this will take around 4 minutes to run.
@@ -24,21 +24,21 @@ This repository contains a docker compose file that when run will create a micro
 * To further test this, we can go to `localhost:8002` to access the kong gateway manager here we could see 5 services each with their own route. 
 
 ### Setting up Kong Prometheus plugin
-* While still at the address `loaclhost:8002` underneathe sevices you will find plugins.
-* Select "install new plugins" and in the search field labeled "filter plugins" look up `prometheus`.
+* While still at the address `loaclhost:8002` underneath services you will find plugins.
+* Select "install new plugins" and in the search field labelled "filter plugins" look up `prometheus`.
 * Select Enable, select Global, and check the 5 config tags at the bottom of the page
 * Select Install.
 
 ### Setting up Prometheus and Grafana.
 * Look up `localhost:3000`, this will direct you to the Grafana page, login using username admin and password admin.
-* Once you have set a new password you will be directed to the home page where you will need to make a new datasource.
+* Once you have set a new password you will be directed to the home page where you will need to make a new data source.
 * Click Add your first data source, and in the time series data section select prometheus.
-* Give the data source a sutible name of your choising, and the URL `http://prometheus:9090`
-* All other fields can be left blank, now scoll to the bottom of the page and select save and test.
-* A pop up should appare saying the data source is working. Now hover your mouse over the 4th item from the top on the right hand side nav bar (this should show dashboard options) and select import.
+* Give the data source a suitable name of your choosing, and the URL `http://prometheus:9090`
+* All other fields can be left blank, now scroll to the bottom of the page and select save and test.
+* A pop up should appear saying the data source is working. Now hover your mouse over the 4th item from the top on the right-hand side nav bar (this should show dashboard options) and select import.
 * Upload the `basic-api-dashboard.json` file located in the prometheus folder of this repository, then select the data source you create in the previous steps.
 * Click Import. You will be directed to a dashboard page with 3 panels, one with successful http requests, one with bad http requests, and one with the CPU usage of the API. 
-* Save the dashboard and return to it once you hav esent some test data using postman in the last steps.
+* Save the dashboard and return to it once you have sent some test data using postman in the last steps.
 
 
 
@@ -63,6 +63,4 @@ This repository contains a docker compose file that when run will create a micro
 * Run the GetUser request with the id chosen in the previous step. we should see the updated user and also a 200 OK status code.  
 * Run the DeleteUserByID request with the id of the user you just updated in the value column in path variables, there should be no response and a status code of 204 NO CONTENT.
 * To confirm the user has been deleted run the GetUser request with the same id, we should get a 500 internal server error, and at the bottom of the error should be the message `user not found`.
-* To see metrics data return back to `localhost:3000` and return to the dashboard you had previously set up. 
-
-
+* To see metrics data return back to `localhost:3000` and return to the dashboard you had previously set up.
